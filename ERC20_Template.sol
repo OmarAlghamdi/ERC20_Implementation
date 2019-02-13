@@ -4,15 +4,19 @@ contract ERC20_Template {
     string tokenName;
     string tokenSymbol;
     uint8 tokenDecimals;
+    address owner;
     // Required memory
-    uint256 Supply;
+    uint256 supply;
     mapping (address => uint256) balances;
     mapping (address => mapping (address => uint256)) allowances;
 
-    constructor (string memory _name, string memory _symbol, uint8 _decimals) public {
+    constructor (string memory _name, string memory _symbol, uint8 _decimals, uint256 _supply) public {
         tokenName = _name;
         tokenSymbol = _symbol;
         tokenDecimals = _decimals;
+        supply = _supply;
+        owner = msg.sender;
+        balances[owner] = supply;
     }
 
     // Optional ERC20 functions
@@ -27,7 +31,7 @@ contract ERC20_Template {
     }
     // Required ERC20 functions
     function totalSupply() public view returns (uint256) {
-        return Supply;
+        return supply;
     }
     function balanceOf(address _owner) public view returns (uint256 balance) {
         return balances[_owner];
